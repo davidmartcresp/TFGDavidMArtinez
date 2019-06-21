@@ -1,7 +1,7 @@
 # TFGDavidMArtinez
 Code used to solve some examples of optimal control in the context of hibrid classical-quantum mechanic sistems
 
-rk.py implements an integrator that implements a Runge-Kutta method. 
+rk.py implements an integrator that is a Runge-Kutta method. 
        The Runge-Kutta method is specified by it's Butcher's table 
 
 HamiltonianoDePontriaguin.py: implements the derivation of the equations of optimal control from a given hibrid hamiltonian.
