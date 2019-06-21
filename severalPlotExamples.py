@@ -115,13 +115,13 @@ class bloch:
     def show(self):
         plt.show()
     
-    def scatter(self, r,color="auto",label="t1"):
+    def scatter(self, r,color="auto"):
         ax=self.ax
         xa,ya,za=self.projection(*r)
         if color=="auto":
-            ax.scatter(xa,ya,za,label=label)
+            ax.scatter(xa,ya,za)
         else:
-            ax.scatter(xa,ya,za,label=label,c=color,s=50)
+            ax.scatter(xa,ya,za,c=color,s=50)
         #ax.legend()
         
         return self.fig
@@ -129,7 +129,7 @@ class bloch:
 
 ## código de los plots
 def colorline(
-    x, y, z=None, cmap=plt.get_cmap('copper'), norm=plt.Normalize(0.0,Tfinal),
+    x, y, z=None, cmap=plt.get_cmap('copper'), norm=plt.Normalize(0.0,1.0),
         linewidth=3, alpha=1.0,ax =None):
     """
     http://nbviewer.ipython.org/github/dpsanders/matplotlib-examples/blob/master/colorline.ipynb
@@ -210,7 +210,7 @@ def plots(estados,tf,Q0P0,QfPf,QfPfquantum):
     z1 = 1 * np.outer(np.ones(np.size(u)), np.cos(v))
     
     ax1.plot_wireframe(x1, y1, z1, color='grey', rstride=4, cstride=4,
-                      alpha=0.25, label = 'Esfera de Bloch')
+                      alpha=0.25)
     esfera=bloch(ax1,fig)
         # Hide grid lines
     ax1.grid(False)
@@ -232,12 +232,12 @@ def plots(estados,tf,Q0P0,QfPf,QfPfquantum):
     esfera.traj4cdeg(trajcuan,cmap=cmap1)
     #esfera.traj4c(trajcuan2,"tf="+str(2*Tfinal))
     r=Q0P0
-    esfera.scatter([r[2],r[6],r[3],r[7]],"red","t0")
+    esfera.scatter([r[2],r[6],r[3],r[7]],"red")
     r=QfPfquantum
-    esfera.scatter([r[0],r[1],r[2],r[3]],"blue","t1")
+    esfera.scatter([r[0],r[1],r[2],r[3]],"blue")
     
-    esfera.scatter([0,0,0,1],"green","t1")
-    
+    esfera.scatter([0,0,0,1],"green")
+    esfera.rotate(0,45)
     
     
 
@@ -254,7 +254,7 @@ def plots(estados,tf,Q0P0,QfPf,QfPfquantum):
     x, y = verts[:, 0], verts[:, 1]
     z = np.linspace(0, Tfinal, len(x))
     
-    colorline(x, y, z, cmap=cmap1, linewidth=3,ax=ax2)
+    colorline(x, y, z, cmap=cmap1, linewidth=3,ax=ax2,norm=plt.Normalize(0.0,tf))
     
     
     
@@ -279,9 +279,9 @@ def plots(estados,tf,Q0P0,QfPf,QfPfquantum):
     p2=ax2.scatter(QfPf[0],QfPf[1],c='blue')
 
     
-    fig.legend((p1, p2,p3), ('Punto inicial','Punto intermedio' ,'Punto final'), 'upper right')
+    fig.legend((p1, p2), ('Punto inicial','Punto final'), 'upper right')
     
-    lc=colorline(x, y, z, cmap=cmap1, linewidth=3,ax=ax3)
+    lc=colorline(x, y, z, cmap=cmap1, linewidth=3,ax=ax3,norm=plt.Normalize(0.0,tf))
     ax3.set_xlim(-0.1+x.min(), x.max()+0.1)
     ax3.set_ylim(y.min()-0.2,y.max()+0.2)
     
